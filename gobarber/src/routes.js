@@ -12,7 +12,7 @@ import NotificationController from './app/controllers/NotificationController';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
 
-import authMiddleware from './app/middleware/auth';
+import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
