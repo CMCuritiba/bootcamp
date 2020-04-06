@@ -1,18 +1,21 @@
 import * as Yup from 'yup';
+import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
+
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
-import { startOfHour, parseISO, isBefore } from 'date-fns';
+import Notification from '../schemas/Notification';
 
 class AppointmentController {
     async index(req, res) {
-        const { page = 1} = req.query;
+        const { page = 1 } = req.query;
         const agendamentos = await Appointment.findAll({
             where: { user_id: req.userId, canceled_at: null },
             order: ['date'],
             attributes: ['id', 'date'],
-            limit:20,
-            offset: (page-1) * 20,
+            limit: 20,
+            offset: (page - 1) * 20,
             include: [
                 {
                     model: User,
@@ -87,6 +90,50 @@ class AppointmentController {
             date,
         });
 
+        // Notificar prestador de serviço
+        const user = await User.findByPk(req.userId);
+        const formattedDate = format(
+            hourStart,
+            "'dia 'dd' de 'MMMM', às' H:mm'h'",
+            {
+                locale: pt,
+            }
+        );
+
+        await Notification.create({
+            content: `Novo agendamento do ${user.name} para ${formattedDate}`,
+            user: provider_id,
+        });
+
+        return res.json(appointment);
+    }
+
+    async delete(req, res) {
+        const appointment = await Appointment.findByPk(req.params.id, {
+            include: [
+                {
+                    model: User,
+                    as: 'provider',
+                },
+            ],
+        });
+
+        if (appointment.user_id !== req.userId) {
+            return res.status(401).json({
+                error: 'Apenas o dono do agendamento pode cancelá-lo.',
+            });
+        }
+
+        const subData = subHours(appointment.date, 2);
+        if (isBefore(subData, new Date())) {
+            return res.status(401).json({
+                error:
+                    'Os cancelamentos devem ter pelo menos 2 horas de antecedencia.',
+            });
+        }
+
+        appointment.canceled_at = new Date();
+        await appointment.save();
         return res.json(appointment);
     }
 }
