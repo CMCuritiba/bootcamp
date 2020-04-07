@@ -1,4 +1,4 @@
 export default {
-    secret: 'palavra-que-nunca-se-repete-md5',
+    secret: process.env.APP_SECRET,
     expiresIn: '7d',
 };

@@ -28,7 +28,7 @@ class Database {
 
     mongo() {
         this.connection = mongoose.connect(
-            'mongodb://localhost:27017/gobarber',
+            process.env.MONGO_URL,
             // { useNewUrlParser: true, useFindAndModify: true }
             // Warning: vai ser depreciado.
             // node:32110) DeprecationWarning: current Server Discovery

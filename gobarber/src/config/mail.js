@@ -1,11 +1,11 @@
 // configuração da caixa do Mailtrap do Deini
 export default {
-    host: 'smtp.mailtrap.io',
-    port: 2525,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     secure: false,
     auth: {
-        user: '803afee745110e',
-        pass: '11f1dd52f59c68',
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
     },
     default: {
         from: 'Equipe GoBarber <noreply@gobarber.com>',
