@@ -1,4 +1,4 @@
 export default {
-  secret: 'frase-unica-que-ninguem-nunca-pensou-so-eu-que-pensei',
+  secret: process.env.APP_SECRET,
   expiresIn: '7d',
 };
