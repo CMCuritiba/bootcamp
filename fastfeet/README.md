@@ -165,7 +165,11 @@ Permita que o administrador possa cadastrar entregadores para a plataforma, o en
 - created_at;
 - updated_at;
 
-Crie rotas para listagem/cadastro/atualização/remoção de entregadores;
+Crie rotas para :
+[OK - ] listagem/
+[OK - ] cadastro/
+[OK - ] atualização/
+[OK - ] remoção de entregadores;
 
 Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
 
@@ -255,11 +259,3 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 
 Feito com ♥ by Rocketseat :wave: [Entre na nossa comunidade!](https://discordapp.com/invite/gCRAFhc)
 
-
-
-LISTA em 08/04/2020
-    RAMIRO
-    MARCIO
-    GERALDO
-    ANTONIO
-    DEINI
