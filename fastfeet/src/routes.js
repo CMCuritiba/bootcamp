@@ -9,6 +9,7 @@ import SessionController from './app/controllers/SessionController';
 import RecipientController from './app/controllers/RecipientController';
 import DelivererController from './app/controllers/DelivererController';
 import FileController from './app/controllers/FileController';
+import DeliveryController from './app/controllers/DeliveryController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -27,6 +28,9 @@ routes.get('/deliverers', DelivererController.index);
 routes.post('/deliverers', DelivererController.store);
 routes.put('/deliverers/:id', DelivererController.update);
 routes.delete('/deliverers/:id', DelivererController.delete);
+
+routes.get('/deliveries', DeliveryController.index);
+routes.post('/deliveries', DeliveryController.store);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
