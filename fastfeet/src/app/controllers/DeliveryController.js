@@ -6,6 +6,9 @@ import Delivery from '../models/Delivery';
 import Deliverer from '../models/Deliverer';
 import Recipient from '../models/Recipient';
 
+import NotifyDelivererMail from '../jobs/NotifyDelivererMail';
+import Queue from '../../lib/Queue';
+
 class DeliveryController {
   async index(req, res) {
     const { page = 1 } = req.query;
@@ -58,8 +61,20 @@ class DeliveryController {
     });
 
     /** Caso salvo ok, enviar e-mail para o entregador notificando-o */
+    /* Resolver questão de acesso aos atributos da encomenda para passar no corpo da mensagem */
 
-    return res.status(200).json(delivery);
+    const deliveryMail = {
+      product: delivery.product,
+      recipientName: recipientExists.name,
+      delivererEmail: delivererExists.email,
+      delivererName: delivererExists.name,
+    };
+
+    await Queue.add(NotifyDelivererMail.key, {
+      deliveryMail,
+    });
+
+    return res.status(200).json(deliveryMail);
   }
 }
 

@@ -257,3 +257,12 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 ---
 
 Feito com ♥ by Rocketseat :wave: [Entre na nossa comunidade!](https://discordapp.com/invite/gCRAFhc)
+
+
+16/04/2020
+DEINI
+ANTONIO
+RAMIRO
+LINCOLN
+GERALDO
+MARCIO
