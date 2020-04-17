@@ -1,5 +1,6 @@
 .vscode
 tmp/uploads/*
+FIL*
 # Logs
 logs
 *.log

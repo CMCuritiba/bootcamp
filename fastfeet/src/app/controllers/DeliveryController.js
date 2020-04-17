@@ -62,19 +62,75 @@ class DeliveryController {
 
     /** Caso salvo ok, enviar e-mail para o entregador notificando-o */
     /* Resolver questão de acesso aos atributos da encomenda para passar no corpo da mensagem */
-
-    const deliveryMail = {
-      product: delivery.product,
-      recipientName: recipientExists.name,
-      delivererEmail: delivererExists.email,
-      delivererName: delivererExists.name,
-    };
+    const deliveryMail = await Delivery.findByPk(delivery.id, {
+      include: [
+        { model: Deliverer, as: 'deliverer', attributes: ['name', 'email'] },
+        { model: Recipient, as: 'recipient', attributes: ['name'] },
+      ],
+    });
 
     await Queue.add(NotifyDelivererMail.key, {
       deliveryMail,
     });
 
     return res.status(200).json(deliveryMail);
+  }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      recipient_id: Yup.number().required(),
+      deliverer_id: Yup.number().required(),
+      signature_id: Yup.number(),
+      product: Yup.string(),
+      canceled_at: Yup.date().nullable(),
+      start_date: Yup.date(),
+      end_date: Yup.date(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails.' });
+    }
+
+    const deliveryId = req.params.id;
+
+    const deliveryExists = await Delivery.findByPk(deliveryId);
+
+    if (!deliveryExists) {
+      return res.status(404).json({ error: 'Delivery not found.' });
+    }
+
+    const delivererExists = await Deliverer.findByPk(req.body.deliverer_id);
+
+    if (!delivererExists) {
+      return res.status(404).json({ error: 'Deliverer not found.' });
+    }
+
+    const recipientExists = await Recipient.findByPk(req.body.recipient_id);
+
+    if (!recipientExists) {
+      return res.status(404).json({ error: 'Recipient not found.' });
+    }
+
+    const { recipient_id, deliverer_id, product, canceled_at } = req.body;
+
+    await deliveryExists.update({
+      recipient_id,
+      deliverer_id,
+      product,
+      canceled_at,
+    });
+
+    return res.json({ recipient_id, deliverer_id, product, canceled_at });
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+    const delivery = await Delivery.findByPk(id);
+    if (!delivery) {
+      return res.status(400).json({ error: 'Delivery does not exist.' });
+    }
+    await delivery.destroy();
+    return res.status(200).json({ ok: 'Delivery deleted.' });
   }
 }
 

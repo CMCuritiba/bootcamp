@@ -6,15 +6,16 @@ class NotifyDelivererMail {
   }
 
   /* Resolver questão de acesso aos atributos da encomenda para passar no corpo da mensagem */
-  async handle(delivery) {
+  async handle({ data }) {
+    const { deliveryMail } = data;
     await Mail.sendMail({
-      to: `${delivery.delivererName} <${delivery.delivererEmail}>`,
+      to: `${deliveryMail.deliverer.name} <${deliveryMail.deliverer.email}>`,
       subject: 'Nova encomenda para retirada',
       template: 'notifyDeliverer',
       context: {
-        deliverer: delivery.delivererName,
-        recipient: delivery.recipientName,
-        product: delivery.product,
+        deliverer: deliveryMail.deliverer.name,
+        recipient: deliveryMail.recipient.name,
+        product: deliveryMail.product,
       },
     });
 

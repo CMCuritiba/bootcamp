@@ -165,10 +165,10 @@ Permita que o administrador possa cadastrar entregadores para a plataforma, o en
 - updated_at;
 
 Crie rotas para :
-[OK - ] listagem/
-[OK - ] cadastro/
-[OK - ] atualização/
-[OK - ] remoção de entregadores;
+[OK] listagem/
+[OK] cadastro/
+[OK] atualização/
+[OK] remoção de entregadores;
 
 Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
 
@@ -178,16 +178,17 @@ Apesar do entregador estar cadastrado, ele não é independente dentro da plataf
 
 Nessa funcionalidade criaremos um cadastro de encomendas por entregador, a encomenda possui os campos:
 
-- id (id da entrega)
-- recipient_id (referência ao destinatário);
-- deliveryman_id (referência ao entregador);
-- signature_id (referência à uma assinatura do destinatário, que será uma imagem);
-- product (nome do produto a ser entregue);
-- canceled_at (data de cancelamento, se cancelada);
-- start_date (data de retirada do produto);
-- end_date (data final da entrega);
-- created_at;
-- updated_at;
+[OK] - id (id da entrega)
+
+[OK] - recipient_id (referência ao destinatário);
+[OK] - deliveryman_id (referência ao entregador);
+[OK] - signature_id (referência à uma assinatura do destinatário, que será uma imagem);
+[OK] - product (nome do produto a ser entregue);
+[OK] - canceled_at (data de cancelamento, se cancelada);
+[OK] - start_date (data de retirada do produto);
+[OK] - end_date (data final da entrega);
+[OK] - created_at;
+[OK] - updated_at;
 
 A **data de início** deve ser cadastrada assim que for feita a retirada do produto pelo entregador, e as retiradas só podem ser feitas entre as 08:00 e 18:00h.
 
@@ -197,7 +198,12 @@ Os campos **recipient_id** e **deliveryman_id** devem ser cadastrados no momento
 
 Quando a encomenda é **cadastrada** para um entregador, o entregador recebe um e-mail com detalhes da encomenda, com nome do produto e uma mensagem informando-o que o produto já está disponível para a retirada.
 
-Crie rotas para listagem/cadastro/atualização/remoção de encomendas;
+Crie rotas para
+[OK] listagem/
+[OK] cadastro/
+[OK] atualização/
+[OK] remoção
+de encomendas;
 
 Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
 
@@ -207,9 +213,9 @@ Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplic
 
 ### **1. Visualizar encomendas**
 
-Para que o entregador possa visualizar suas encomendas, ele deverá informar apenas seu ID de cadastro (ID do entregador no banco de dados). Essa funcionalidade deve retornar as encomendas atribuidas a ele, que **não estejam entregues ou canceladas**;
+[OK] Para que o entregador possa visualizar suas encomendas, ele deverá informar apenas seu ID de cadastro (ID do entregador no banco de dados). Essa funcionalidade deve retornar as encomendas atribuidas a ele, que **não estejam entregues ou canceladas**;
 
-Permita também que ele liste apenas as encomendas que já foram **entregues** por ele, com base em seu ID de cadastro;
+[OK] Permita também que ele liste apenas as encomendas que já foram **entregues** por ele, com base em seu ID de cadastro;
 
 Exemplo de requisição: `GET https://fastfeet.com/deliveryman/1/deliveries`
 
@@ -257,12 +263,3 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 ---
 
 Feito com ♥ by Rocketseat :wave: [Entre na nossa comunidade!](https://discordapp.com/invite/gCRAFhc)
-
-
-16/04/2020
-DEINI
-ANTONIO
-RAMIRO
-LINCOLN
-GERALDO
-MARCIO

@@ -11,11 +11,16 @@ import DelivererController from './app/controllers/DelivererController';
 import FileController from './app/controllers/FileController';
 import DeliveryController from './app/controllers/DeliveryController';
 
+import CarrierController from './app/controllers/CarrierController';
+
 const routes = new Router();
 const upload = multer(multerConfig);
 
 // rota para autenticação
 routes.post('/sessions', SessionController.store);
+
+routes.get('/deliverers/:id/deliveries', CarrierController.index);
+routes.get('/deliverers/:id/delivered', CarrierController.show);
 
 // middleware garante que as demais rotas a seguir estejam acessíveis
 // apenas para usuários autenticados
@@ -31,6 +36,8 @@ routes.delete('/deliverers/:id', DelivererController.delete);
 
 routes.get('/deliveries', DeliveryController.index);
 routes.post('/deliveries', DeliveryController.store);
+routes.put('/deliveries/:id', DeliveryController.update);
+routes.delete('/deliveries/:id', DeliveryController.delete);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
