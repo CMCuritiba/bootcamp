@@ -19,8 +19,10 @@ const upload = multer(multerConfig);
 // rota para autenticação
 routes.post('/sessions', SessionController.store);
 
-routes.get('/deliverers/:id/deliveries', CarrierController.index);
-routes.get('/deliverers/:id/delivered', CarrierController.show);
+routes.get('/carriers/:id/deliveries', CarrierController.index);
+routes.get('/carriers/:id/delivered', CarrierController.show);
+routes.put('/carriers/:id/catch/', CarrierController.catch);
+routes.put('/carriers/:id/drop/', CarrierController.drop);
 
 // middleware garante que as demais rotas a seguir estejam acessíveis
 // apenas para usuários autenticados
