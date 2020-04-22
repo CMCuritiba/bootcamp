@@ -10,6 +10,7 @@ import RecipientController from './app/controllers/RecipientController';
 import DelivererController from './app/controllers/DelivererController';
 import FileController from './app/controllers/FileController';
 import DeliveryController from './app/controllers/DeliveryController';
+import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
 
 import CarrierController from './app/controllers/CarrierController';
 
@@ -23,6 +24,8 @@ routes.get('/carriers/:id/deliveries', CarrierController.index);
 routes.get('/carriers/:id/delivered', CarrierController.show);
 routes.put('/carriers/:id/catch/', CarrierController.catch);
 routes.put('/carriers/:id/drop/', CarrierController.drop);
+
+routes.post('/delivery/:id/problems', DeliveryProblemsController.store);
 
 // middleware garante que as demais rotas a seguir estejam acessíveis
 // apenas para usuários autenticados
@@ -40,6 +43,13 @@ routes.get('/deliveries', DeliveryController.index);
 routes.post('/deliveries', DeliveryController.store);
 routes.put('/deliveries/:id', DeliveryController.update);
 routes.delete('/deliveries/:id', DeliveryController.delete);
+
+routes.get('/delivery/problems', DeliveryProblemsController.index);
+routes.get('/delivery/:id/problems', DeliveryProblemsController.show);
+routes.delete(
+  '/problem/:id/cancel-delivery',
+  DeliveryProblemsController.delete
+);
 
 routes.post('/files', upload.single('file'), FileController.store);
 

@@ -10,6 +10,7 @@ import {
 } from 'date-fns';
 
 import Delivery from '../models/Delivery';
+import File from '../models/File';
 
 class CarrierController {
   async index(req, res) {
@@ -126,6 +127,10 @@ class CarrierController {
     const parseDate = parseISO(req.body.end_date);
 
     // verificar se o ID do arquivo realmente existe
+    const file = await File.findByPk(req.body.signature_id);
+    if (!file) {
+      return res.status(404).json({ error: 'Signature file not found.' });
+    }
 
     delivery.end_date = parseDate;
     delivery.signature_id = req.body.signature_id;

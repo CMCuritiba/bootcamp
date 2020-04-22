@@ -221,32 +221,32 @@ Exemplo de requisição: `GET https://fastfeet.com/deliveryman/1/deliveries`
 
 ### 2. Alterar status de encomendas
 
-Você deve permitir que o entregador tenha rotas para incluir uma data de retirada (start_date) e data de entrega (end_date) para as encomendas. O entregador só pode fazer **5 retiradas por dia**.
+[OK] Você deve permitir que o entregador tenha rotas para incluir uma data de retirada (start_date) e data de entrega (end_date) para as encomendas. O entregador só pode fazer **5 retiradas por dia**.
 
-Obs.: Para a funcionalidade de finalizar a entrega, você deverá permitir o envio de uma imagem que irá preencher o campo signature_id da tabela de encomendas.
+[OK] Obs.: Para a funcionalidade de finalizar a entrega, você deverá permitir o envio de uma imagem que irá preencher o campo signature_id da tabela de encomendas.
 
 ### 3. Cadastrar problemas nas entregas
 
 O entregador nem sempre conseguirá entregar as encomendas com sucesso, algumas vezes o destinatário pode estar ausente, ou o próprio entregador poderá ter algum problema com seu veículo na hora de entregar.
 
-A tabela `delivery_problems` deve conter os seguintes campos:
+[OK] A tabela `delivery_problems` deve conter os seguintes campos:
 
-- delivery_id (referência da encomenda);
-- description (descrição do problema que o entregador teve);
-- created_at;
-- updated_at;
+[OK] - delivery_id (referência da encomenda);
+[OK] - description (descrição do problema que o entregador teve);
+[OK] - created_at;
+[OK] - updated_at;
 
-Crie uma rota para a distribuidora listar todas as entregas com algum problema;
+[OK] Crie uma rota para a distribuidora listar todas as entregas com algum problema;
 
-Crie uma rota para listar todos os problemas de uma encomenda baseado no ID da encomenda.
+[OK] Crie uma rota para listar todos os problemas de uma encomenda baseado no ID da encomenda.
 
 Exemplo de requisição: `GET https://fastfeet.com/delivery/2/problems`
 
-Crie uma rota para o entregador cadastrar problemas na entrega apenas informando seu ID de cadastro (ID da encomenda no banco de dados);
+[OK] Crie uma rota para o entregador cadastrar problemas na entrega apenas informando seu ID de cadastro (ID da encomenda no banco de dados);
 
 Exemplo de requisição: `POST https://fastfeet.com/delivery/3/problems`
 
-Crie uma rota para a distribuidora cancelar uma entrega baseado no ID do problema. Esse cancelamento pode acontecer devido a gravidade do problema da entrega, por exemplo, em caso de perda da encomenda.
+[WIP] Crie uma rota para a distribuidora cancelar uma entrega baseado no ID do problema. Esse cancelamento pode acontecer devido a gravidade do problema da entrega, por exemplo, em caso de perda da encomenda.
 
 Exemplo de requisição: `DELETE https://fastfeet.com/problem/1/cancel-delivery`
 
