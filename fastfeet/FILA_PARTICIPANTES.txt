@@ -1,8 +1,10 @@
-Ordem dos participantes em 22/04/2020
-LINCOLN
-MARCIO
-GERALDO
-RAMIRO
-DEINI
-ANTONIO
+Ordem dos participantes em 23/04/2020
+
+    ANTONIO
+    RAMIRO
+    LINCOLN
+    MARCIO
+    GERALDO
+    DEINI
+
 

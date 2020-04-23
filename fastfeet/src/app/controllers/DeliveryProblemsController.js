@@ -1,7 +1,11 @@
 import * as Yup from 'yup';
-import { parseISO } from 'date-fns';
+
+import Queue from '../../lib/Queue';
+import DeliveryCancellationMail from '../jobs/DeliveryCancellationMail';
 import DeliveryProblem from '../models/DeliveryProblem';
 import Delivery from '../models/Delivery';
+import Recipient from '../models/Recipient';
+import Deliverer from '../models/Deliverer';
 
 class DeliveryProblemsController {
   async index(req, res) {
@@ -36,12 +40,12 @@ class DeliveryProblemsController {
       return res.status(400).json({ error: 'Description does not exist.' });
     }
 
-    const deliveryExists = await Delivery.findByPk(deliveryId);
-    if (!deliveryExists) {
+    const delivery = await Delivery.findByPk(deliveryId);
+    if (!delivery) {
       return res.status(404).json({ error: 'Delivery not found.' });
     }
 
-    if (deliveryExists.end_date) {
+    if (delivery.end_date) {
       return res.status(400).json({ error: 'Delivery already concluded.' });
     }
 
@@ -57,19 +61,28 @@ class DeliveryProblemsController {
   async delete(req, res) {
     const deliveryId = req.params.id;
 
-    const deliveryExists = await Delivery.findByPk(deliveryId);
+    const delivery = await Delivery.findByPk(deliveryId, {
+      include: [
+        { model: Recipient, as: 'recipient' },
+        { model: Deliverer, as: 'deliverer' },
+      ],
+    });
 
-    if (!deliveryExists) {
+    if (!delivery) {
       return res.status(404).json({ error: 'Delivery not found' });
     }
 
-    deliveryExists.canceled_at = parseISO(new Date());
+    if (delivery.canceled_at) {
+      return res.status(401).json({ error: 'Delivery already canceled' });
+    }
 
-    // console.log(parseISO(new Date('YYYY-mm-DD')));
+    delivery.canceled_at = new Date();
 
-    // deliveryExists.save();
+    delivery.save();
 
-    return res.status(200).json({ ok: `Delivery ID ${deliveryId} cancelled.` });
+    Queue.add(DeliveryCancellationMail.key, { delivery });
+
+    return res.status(200).json(delivery);
   }
 }
 
